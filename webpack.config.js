@@ -1,36 +1,36 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 // the path(s) that should be cleaned
 let pathsToClean = [
-  'assets/dist/*.*',
-  'assets/dist/main.bundle.js.map',
-  'build/*.*'
+  "assets/dist/*.*",
+  "assets/dist/main.bundle.js.map",
+  "build/*.*"
 ];
 
 module.exports = {
-  mode: 'development',
-  devtool: 'source-map',
+  mode: "development",
+  devtool: "source-map",
   entry: {
-    main: './web/index.js'
+    main: "./web/index.js"
   },
   output: {
-    path: path.join(__dirname, './build'),
-    filename: '[name].bundle.js'
+    path: path.join(__dirname, "./assets/dist"),
+    filename: "[name].bundle.js"
   },
-  module: { 
+  module: {
     rules: [
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
               name(file) {
-                return 'images/[name].[ext]';
+                return "images/[name].[ext]";
               }
             }
           }
@@ -38,29 +38,29 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.js$/,
-        include: [path.resolve(__dirname, 'web')],
+        include: [path.resolve(__dirname, "web")],
         exclude: /(node_modules|bower_components)/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
               presets: [
                 [
-                  'env',
+                  "env",
                   {
                     targets: {
-                      browsers: ['last 2 versions', 'safari >= 7']
+                      browsers: ["last 2 versions", "safari >= 7"]
                     }
                   }
                 ],
-                'react',
-                'stage-2'
+                "react",
+                "stage-2"
               ],
-              plugins: ['babel-plugin-transform-object-rest-spread'],  
+              plugins: ["babel-plugin-transform-object-rest-spread"]
             }
           }
         ]
@@ -68,27 +68,27 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss', '.css'],
+    extensions: [".js", ".jsx", ".scss", ".css"],
     alias: {
       leaflet_search:
-        __dirname + '/node_modules/leaflet-search/dist/leaflet-search.min.js',
+        __dirname + "/node_modules/leaflet-search/dist/leaflet-search.min.js",
       leaflet_search_css:
-        __dirname + '/node_modules/leaflet-search/dist/leaflet-search.min.css',
+        __dirname + "/node_modules/leaflet-search/dist/leaflet-search.min.css",
       marker_cluster_css:
         __dirname +
-        '/node_modules/leaflet.markercluster/dist/MarkerCluster.css',
+        "/node_modules/leaflet.markercluster/dist/MarkerCluster.css",
       marker_cluster_default_css:
         __dirname +
-        '/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
-      leaflet_css: __dirname + '/node_modules/leaflet/dist/leaflet.css'
+        "/node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+      leaflet_css: __dirname + "/node_modules/leaflet/dist/leaflet.css"
     }
   },
   plugins: [
     new CleanWebpackPlugin(pathsToClean),
     new HtmlWebpackPlugin({
-      inlineSource: '.(js|css)$', // embed all javascript and css inline
-      template: './web/index.html',
-      inject: 'body'
+      inlineSource: ".(js|css)$", // embed all javascript and css inline
+      template: "./web/index.html",
+      inject: "body"
     }),
     new HtmlWebpackInlineSourcePlugin()
   ]
