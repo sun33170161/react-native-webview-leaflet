@@ -52205,18 +52205,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var RasterLayer = function RasterLayer(props) {
   console.log({ props: props });
   if (props.layer) {
-    if (props.layer.type === 'TileLayer') {
+    if (props.layer.type === "Polyline") {
+      return _react2.default.createElement(_reactLeaflet.Polyline, _extends({
+        attribution: props.layer.attribution,
+        positions: props.layer.positions
+      }, props));
+    } else if (props.layer.type === "TileLayer") {
       return _react2.default.createElement(_reactLeaflet.TileLayer, _extends({
         attribution: props.layer.attribution,
         url: props.layer.url,
         zIndex: props.layer.zIndex || 0
       }, props));
-    } else if (props.layer.type === 'WMSTileLayer') {
+    } else if (props.layer.type === "WMSTileLayer") {
       return _react2.default.createElement(_reactLeaflet.WMSTileLayer, _extends({
         url: props.layer.url,
         layers: props.layer.layers
       }, props));
-    } else if (props.layer.type === 'ImageOverlay') {
+    } else if (props.layer.type === "ImageOverlay") {
       // debugger;
       return _react2.default.createElement(_reactLeaflet.ImageOverlay, _extends({
         url: props.layer.url,
@@ -52224,7 +52229,7 @@ var RasterLayer = function RasterLayer(props) {
         opacity: props.layer.opacity || 1,
         zIndex: props.layer.zIndex || 0
       }, props));
-    } else if (props.layer.type === 'VideoOverlay') {
+    } else if (props.layer.type === "VideoOverlay") {
       return _react2.default.createElement(_reactLeaflet.VideoOverlay, _extends({
         url: props.layer.url,
         bounds: props.layer.bounds,
