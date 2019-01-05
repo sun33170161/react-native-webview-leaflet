@@ -17,6 +17,7 @@ const RasterLayer = props => {
           attribution={props.layer.attribution}
           positions={props.layer.positions}
           {...props}
+          {...props.layer.style}
         />
       );
     } else if (props.layer.type === "TileLayer") {

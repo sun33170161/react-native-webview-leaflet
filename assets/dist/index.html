@@ -52243,7 +52243,7 @@ var RasterLayer = function RasterLayer(props) {
       return _react2.default.createElement(_reactLeaflet.Polyline, _extends({
         attribution: props.layer.attribution,
         positions: props.layer.positions
-      }, props));
+      }, props, props.layer.style));
     } else if (props.layer.type === "TileLayer") {
       return _react2.default.createElement(_reactLeaflet.TileLayer, _extends({
         attribution: props.layer.attribution,
