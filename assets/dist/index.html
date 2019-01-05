@@ -52388,7 +52388,7 @@ __webpack_require__(/*! react-leaflet-markercluster/dist/styles.min.css */ "./no
 var isValidCoordinates = __webpack_require__(/*! is-valid-coordinates */ "./node_modules/is-valid-coordinates/index.js");
 var util = __webpack_require__(/*! util */ "./node_modules/util/util.js");
 
-var MESSAGE_PREFIX = 'react-native-webview-leaflet';
+var MESSAGE_PREFIX = "react-native-webview-leaflet";
 
 // Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/';
 
@@ -52404,17 +52404,17 @@ var mapComponent = function (_Component) {
     var _this = _possibleConstructorReturn(this, (mapComponent.__proto__ || Object.getPrototypeOf(mapComponent)).call(this, props));
 
     _this.componentDidMount = function () {
-      _this.printElement('leafletReactHTML.js componentDidMount');
+      _this.printElement("leafletReactHTML.js componentDidMount");
 
       // add the event listeners
       if (document) {
-        document.addEventListener('message', _this.handleMessage), false;
-        _this.printElement('using document');
+        document.addEventListener("message", _this.handleMessage), false;
+        _this.printElement("using document");
       } else if (window) {
-        window.addEventListener('message', _this.handleMessage), false;
-        _this.printElement('using window');
+        window.addEventListener("message", _this.handleMessage), false;
+        _this.printElement("using window");
       } else {
-        console.log('unable to add event listener');
+        console.log("unable to add event listener");
         return;
       }
 
@@ -52424,13 +52424,13 @@ var mapComponent = function (_Component) {
           locations: _testLocations2.default,
           ownPositionMarker: {
             coords: _this.state.centerPosition,
-            icon: '🎃',
+            icon: "🎃",
             size: [24, 24],
             animation: {
-              name: 'pulse',
-              duration: '.5',
+              name: "pulse",
+              duration: ".5",
               delay: 0,
-              interationCount: 'infinite'
+              interationCount: "infinite"
             }
           },
           mapLayers: _mockMapLayers2.default,
@@ -52446,16 +52446,16 @@ var mapComponent = function (_Component) {
       }
 
       try {
-        _this.printElement('trying to send on load message');
+        _this.printElement("trying to send on load message");
         setTimeout(function () {
-          _this.printElement('sending on load message after timeout');
-          _this.onMapEvent('onLoad', {
+          _this.printElement("sending on load message after timeout");
+          _this.onMapEvent("onLoad", {
             loaded: true,
             center: _this.mapRef.current.leafletElement.getCenter(),
             bounds: _this.mapRef.current.leafletElement.getBounds(),
             zoom: _this.mapRef.current.leafletElement.getZoom()
           });
-          _this.printElement('sent onload event');
+          _this.printElement("sent onload event");
         }, 1000);
       } catch (error) {
         _this.printElement(error);
@@ -52464,16 +52464,16 @@ var mapComponent = function (_Component) {
 
     _this.componentWillUnmount = function () {
       if (document) {
-        document.removeEventListener('message', _this.handleMessage);
+        document.removeEventListener("message", _this.handleMessage);
       } else if (window) {
-        window.removeEventListener('message', _this.handleMessage);
+        window.removeEventListener("message", _this.handleMessage);
       }
     };
 
     _this.componentDidUpdate = function (prevProps, prevState) {
       var that = _this;
       if (_this.state.centerPosition !== prevState.centerPosition) {
-        _this.printElement('updating centerPosition to ' + _this.state.centerPosition);
+        _this.printElement("updating centerPosition to " + _this.state.centerPosition);
       }
 
       if (prevState.combinedLocations !== _this.state.combinedLocations) {
@@ -52508,7 +52508,7 @@ var mapComponent = function (_Component) {
     _this.updateLocations = function () {
       if (_this.state.locations && _this.state.ownPositionMarker) {
         _this.setState({
-          combinedLocations: [].concat(_toConsumableArray(_this.state.locations), [_extends({ id: 'ownPositionMarker' }, _this.state.ownPositionMarker)])
+          combinedLocations: [].concat(_toConsumableArray(_this.state.locations), [_extends({ id: "ownPositionMarker" }, _this.state.ownPositionMarker)])
         });
       } else if (_this.state.locations) {
         _this.setState({
@@ -52516,17 +52516,17 @@ var mapComponent = function (_Component) {
         });
       } else if (_this.state.ownPositionMarker) {
         _this.setState({
-          combinedLocations: [_extends({ id: 'ownPositionMarker' }, _this.state.ownPositionMarker)]
+          combinedLocations: [_extends({ id: "ownPositionMarker" }, _this.state.ownPositionMarker)]
         });
       }
     };
 
     _this.printElement = function (data) {
       if (SHOW_DEBUG_INFORMATION) {
-        var message = '';
-        if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object') {
+        var message = "";
+        if ((typeof data === "undefined" ? "undefined" : _typeof(data)) === "object") {
           message = util.inspect(data, { showHidden: false, depth: null });
-        } else if (typeof data === 'string') {
+        } else if (typeof data === "string") {
           message = data;
         }
         _this.setState({
@@ -52538,8 +52538,8 @@ var mapComponent = function (_Component) {
 
     _this.createDivIcon = function (location) {
       var divIcon = _leaflet2.default.divIcon({
-        className: 'clearMarkerContainer',
-        html: location.animation ? _this.getAnimatedHTMLString(location.icon || '📍', location.animation || null, location.size || [24, 24]) : _this.getUnanimatedHTMLString(location.icon, location.size),
+        className: "clearMarkerContainer",
+        html: location.animation ? _this.getAnimatedHTMLString(location.icon || "📍", location.animation || null, location.size || [24, 24]) : _this.getUnanimatedHTMLString(location.icon, location.size, location.rotate),
         iconAnchor: location.iconAnchor || null
       });
       return divIcon;
@@ -52548,22 +52548,33 @@ var mapComponent = function (_Component) {
     _this.getAnimatedHTMLString = function (icon, animation) {
       var size = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [24, 24];
 
-      return '<div class=\'animationContainer\' style="\n      animation-name: ' + (animation.name ? animation.name : 'bounce') + '; \n      animation-duration: ' + (animation.duration ? animation.duration : 1) + 's ;\n      animation-delay: ' + (animation.delay ? animation.delay : 0) + 's;\n      animation-direction: ' + (animation.direction ? animation.direction : 'normal') + ';\n      animation-iteration-count: ' + (animation.interationCount ? animation.interationCount : 'infinite') + '">\n      ' + _this.getIconFromEmojiOrImageOrSVG(icon, size) + '\n\n      </div>';
+      return "<div class='animationContainer' style=\"\n      animation-name: " + (animation.name ? animation.name : "bounce") + "; \n      animation-duration: " + (animation.duration ? animation.duration : 1) + "s ;\n      animation-delay: " + (animation.delay ? animation.delay : 0) + "s;\n      animation-direction: " + (animation.direction ? animation.direction : "normal") + ";\n      animation-iteration-count: " + (animation.interationCount ? animation.interationCount : "infinite") + "\">\n      " + _this.getIconFromEmojiOrImageOrSVG(icon, size) + "\n\n      </div>";
     };
 
-    _this.getUnanimatedHTMLString = function (icon, animation) {
-      var size = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [24, 24];
+    _this.getUnanimatedHTMLString = function (icon) {
+      var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [24, 24];
+      var rotate = arguments[2];
 
-      return '<div class=\'unanimatedIconContainer\' >\n      ' + _this.getIconFromEmojiOrImageOrSVG(icon, size) + '\n\n      </div>';
+      return "<div class='unanimatedIconContainer' >\n      " + _this.getIconFromEmojiOrImageOrSVG(icon, size, rotate) + "\n      </div>";
     };
 
-    _this.getIconFromEmojiOrImageOrSVG = function (icon, size) {
-      if (icon.includes('svg') || icon.includes('SVG')) {
-        return ' <div style=\'font-size: ' + Math.max(size[0], size[1]) + 'px\'>\n      ' + icon + '\n      </div>';
-      } else if (icon.includes('//') || icon.includes('base64')) {
-        return '<img src="' + icon + '" style="width:' + size[0] + 'px;height:' + size[1] + 'px;">';
+    _this.getIconFromEmojiOrImageOrSVG = function (icon, size, rotate) {
+      if (icon.includes("svg") || icon.includes("SVG")) {
+        return " <div style='font-size: " + Math.max(size[0], size[1]) + "px'>\n      " + icon + "\n      </div>";
+      } else if (icon.includes("//") || icon.includes("base64")) {
+        var style = "";
+        if (size[0]) {
+          style += "width:" + size[0] + "px;";
+        }
+        if (size[1]) {
+          style += "height:" + size[1] + "px;";
+        }
+        if (rotate) {
+          style += "transform: rotate(" + rotate + "deg);";
+        }
+        return "<img src=\"" + icon + "\" style=\"" + style + "\"";
       } else {
-        return ' <div style=\'font-size: ' + Math.max(size[0], size[1]) + 'px\'>\n    ' + icon + '\n    </div>';
+        return " <div style='font-size: " + Math.max(size[0], size[1]) + "px'>\n    " + icon + "\n    </div>";
       }
     };
 
@@ -52575,26 +52586,26 @@ var mapComponent = function (_Component) {
         payload: payload
       });
 
-      _this.printElement('message to send = ' + message);
+      _this.printElement("message to send = " + message);
 
       try {
-        if (document.hasOwnProperty('postMessage')) {
-          document.postMessage(message, '*');
-        } else if (window.hasOwnProperty('postMessage')) {
-          window.postMessage(message, '*');
+        if (document.hasOwnProperty("postMessage")) {
+          document.postMessage(message, "*");
+        } else if (window.hasOwnProperty("postMessage")) {
+          window.postMessage(message, "*");
         } else {
-          console.log('unable to find postMessage');
-          _this.printElement('unable to find postMessage');
+          console.log("unable to find postMessage");
+          _this.printElement("unable to find postMessage");
         }
       } catch (error) {
-        _this.printElement('error sending message: ' + JSON.stringify(error));
+        _this.printElement("error sending message: " + JSON.stringify(error));
       }
 
-      _this.printElement('sent message: ' + message);
+      _this.printElement("sent message: " + message);
     };
 
     _this.handleMessage = function (event) {
-      _this.printElement('received message ' + util.inspect(event.data, {
+      _this.printElement("received message " + util.inspect(event.data, {
         showHidden: false,
         depth: null
       }));
@@ -52602,14 +52613,14 @@ var mapComponent = function (_Component) {
       var msgData = void 0;
       try {
         msgData = JSON.parse(event.data);
-        if (msgData.hasOwnProperty('prefix') && msgData.prefix === MESSAGE_PREFIX) {
-          _this.printElement('Received: ' + JSON.stringify(msgData));
+        if (msgData.hasOwnProperty("prefix") && msgData.prefix === MESSAGE_PREFIX) {
+          _this.printElement("Received: " + JSON.stringify(msgData));
           _this.setState(_extends({}, _this.state, msgData.payload), function () {
             // this.printElement(`state: ${JSON.stringify(this.state)}`);
           });
         }
       } catch (err) {
-        _this.printElement('leafletReactHTML error: ' + err);
+        _this.printElement("leafletReactHTML error: " + err);
         return;
       }
     };
@@ -52627,7 +52638,7 @@ var mapComponent = function (_Component) {
           zoom: mapZoom
         };
       }
-      _this.printElement('onMapEvent: event = ' + event + ', payload = ' + JSON.stringify(payload));
+      _this.printElement("onMapEvent: event = " + event + ", payload = " + JSON.stringify(payload));
 
       _this.sendMessage({
         event: event,
@@ -52639,14 +52650,14 @@ var mapComponent = function (_Component) {
       // to center the map.  Centering the map component on the actual
       // map center will allow us to recenter the map by updating the centerPosition
       // item in state ourself
-      if (event === 'onMoveEnd') {
+      if (event === "onMoveEnd") {
         _this.setState({ centerPosition: mapCenterPosition }, function () {
           /*  this.printElement(
             `************** Updated centerPosition = ${this.state.centerPosition}`
           ); */
         });
       }
-      if (event === 'onZoomEnd') {
+      if (event === "onZoomEnd") {
         _this.setState({ zoom: mapZoom }, function () {
           /*  this.printElement(
             `************** Updated mapZoom = ${this.state.zoom}`
@@ -52665,13 +52676,13 @@ var mapComponent = function (_Component) {
               _reactLeafletMarkercluster2.default,
               null,
               _this.state.markers.map(function (marker) {
-                if (marker.id !== 'ownPositionMarker') {
+                if (marker.id !== "ownPositionMarker") {
                   return _react2.default.createElement(_reactLeaflet.Marker, {
                     key: marker.id,
                     position: marker.coords,
                     icon: marker.divIcon,
                     onClick: function onClick() {
-                      _this.onMapEvent('onMapMarkerClicked', {
+                      _this.onMapEvent("onMapMarkerClicked", {
                         id: marker.id
                       });
                     }
@@ -52682,13 +52693,13 @@ var mapComponent = function (_Component) {
               })
             ),
             _this.state.markers.map(function (marker) {
-              if (marker.id === 'ownPositionMarker') {
+              if (marker.id === "ownPositionMarker") {
                 return _react2.default.createElement(_reactLeaflet.Marker, {
                   key: marker.id,
                   position: marker.coords,
                   icon: marker.divIcon,
                   onClick: function onClick() {
-                    _this.onMapEvent('onMapMarkerClicked', {
+                    _this.onMapEvent("onMapMarkerClicked", {
                       id: marker.id
                     });
                   }
@@ -52708,7 +52719,7 @@ var mapComponent = function (_Component) {
                 position: marker.coords,
                 icon: marker.divIcon,
                 onClick: function onClick() {
-                  _this.onMapEvent('onMapMarkerClicked', {
+                  _this.onMapEvent("onMapMarkerClicked", {
                     id: marker.id
                   });
                 }
@@ -52760,7 +52771,7 @@ var mapComponent = function (_Component) {
 
 
   _createClass(mapComponent, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var _this2 = this;
 
@@ -52771,15 +52782,15 @@ var mapComponent = function (_Component) {
           _react2.default.Fragment,
           null,
           this.state.mapLayers.length < 1 ? _react2.default.createElement(
-            'div',
+            "div",
             null,
-            'waiting on map layers'
+            "waiting on map layers"
           ) : _react2.default.createElement(
             _reactLeaflet.Map,
             {
               style: {
-                width: '100%',
-                backgroundColor: 'lightblue'
+                width: "100%",
+                backgroundColor: "lightblue"
               },
               ref: this.mapRef,
               center: this.state.centerPosition,
@@ -52792,81 +52803,81 @@ var mapComponent = function (_Component) {
               boundsOptions: this.state.boundsOptions,
               whenReady: function whenReady() {
                 _this2.setState({ loaded: true });
-                _this2.printElement('******* map loaded *******');
+                _this2.printElement("******* map loaded *******");
               },
               onClick: function onClick(event) {
-                _this2.onMapEvent('onMapClicked', {
+                _this2.onMapEvent("onMapClicked", {
                   coords: [event.latlng.lat, event.latlng.lng]
                 });
               },
               onZoomLevelsChange: function onZoomLevelsChange() {
-                _this2.onMapEvent('onZoomLevelsChange', null);
+                _this2.onMapEvent("onZoomLevelsChange", null);
               },
               onResize: function onResize() {
-                _this2.onMapEvent('onResize', null);
+                _this2.onMapEvent("onResize", null);
               },
               onZoomStart: function onZoomStart() {
-                _this2.onMapEvent('onZoomStart', null);
+                _this2.onMapEvent("onZoomStart", null);
               },
               onMoveStart: function onMoveStart() {
-                _this2.onMapEvent('onMoveStart', null);
+                _this2.onMapEvent("onMoveStart", null);
               },
               onZoom: function onZoom() {
-                _this2.onMapEvent('onZoom', null);
+                _this2.onMapEvent("onZoom", null);
               },
               onMove: function onMove() {
-                _this2.onMapEvent('onMove', null);
+                _this2.onMapEvent("onMove", null);
               },
               onZoomEnd: function onZoomEnd() {
-                _this2.onMapEvent('onZoomEnd', null);
+                _this2.onMapEvent("onZoomEnd", null);
               },
               onMoveEnd: function onMoveEnd() {
-                _this2.onMapEvent('onMoveEnd', null);
+                _this2.onMapEvent("onMoveEnd", null);
               },
               onUnload: function onUnload() {
-                _this2.onMapEvent('onUnload', null);
+                _this2.onMapEvent("onUnload", null);
               },
               onViewReset: function onViewReset() {
-                _this2.onMapEvent('onViewReset', null);
+                _this2.onMapEvent("onViewReset", null);
               }
             },
             this.state.mapLayers.length <= 1 ? _react2.default.createElement(_RasterLayer2.default, { layer: this.state.mapLayers[0] }) : _react2.default.createElement(
               _reactLeaflet.LayersControl,
-              { position: 'topright' },
+              { position: "topright" },
               _react2.default.createElement(_ControlsLayer2.default, { mapLayers: this.state.mapLayers })
             ),
             _react2.default.createElement(
               _reactLeaflet.LayersControl,
-              { position: 'topleft' },
+              { position: "topleft" },
               _react2.default.createElement(
                 _reactLeaflet.LayersControl.Overlay,
-                { name: 'Markers', checked: 'true' },
+                { name: "Markers", checked: "true" },
                 this.renderMarkers()
               )
             )
           ),
           SHOW_DEBUG_INFORMATION ? _react2.default.createElement(
-            'div',
+            "div",
             {
               style: {
-                backgroundColor: 'orange',
-                maxHeight: '200px',
-                overflow: 'auto',
+                backgroundColor: "orange",
+                maxHeight: "200px",
+                overflow: "auto",
                 padding: 5,
-                position: 'fixed',
+                position: "fixed",
                 bottom: 0,
                 left: 0,
                 right: 0,
                 zIndex: 15000
               },
-              id: 'messages'
+              id: "messages"
             },
             _react2.default.createElement(
-              'ul',
+              "ul",
               null,
               this.state.debugMessages.map(function (message, index) {
                 return _react2.default.createElement(
-                  'li',
+                  "li",
                   { key: index },
                   message
                 );

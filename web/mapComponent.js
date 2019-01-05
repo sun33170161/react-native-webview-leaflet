@@ -1,28 +1,28 @@
-import Leaflet from 'leaflet';
-import React, { Component, createRef } from 'react';
-import { Map, Marker, LayersControl, LayerGroup } from 'react-leaflet';
-import L from 'leaflet';
-import testLocations from './testLocations';
-import './markerAnimations.css';
-import './normalize.min.css';
+import Leaflet from "leaflet";
+import React, { Component, createRef } from "react";
+import { Map, Marker, LayersControl, LayerGroup } from "react-leaflet";
+import L from "leaflet";
+import testLocations from "./testLocations";
+import "./markerAnimations.css";
+import "./normalize.min.css";
 
-import 'leaflet/dist/leaflet.css';
-import 'leaflet/dist/images/marker-icon-2x.png';
-import 'leaflet/dist/images/marker-shadow.png';
-import './markers.css';
+import "leaflet/dist/leaflet.css";
+import "leaflet/dist/images/marker-icon-2x.png";
+import "leaflet/dist/images/marker-shadow.png";
+import "./markers.css";
 
-import ControlsLayer from './ControlsLayer';
-import RasterLayer from './RasterLayer';
-import mapLayers from './mockMapLayers';
+import ControlsLayer from "./ControlsLayer";
+import RasterLayer from "./RasterLayer";
+import mapLayers from "./mockMapLayers";
 
 // marker cluster imports
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-require('react-leaflet-markercluster/dist/styles.min.css');
+import MarkerClusterGroup from "react-leaflet-markercluster";
+require("react-leaflet-markercluster/dist/styles.min.css");
 
-const isValidCoordinates = require('is-valid-coordinates');
-const util = require('util');
+const isValidCoordinates = require("is-valid-coordinates");
+const util = require("util");
 
-const MESSAGE_PREFIX = 'react-native-webview-leaflet';
+const MESSAGE_PREFIX = "react-native-webview-leaflet";
 
 // Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/';
 
@@ -51,17 +51,17 @@ class mapComponent extends Component {
   }
 
   componentDidMount = () => {
-    this.printElement('leafletReactHTML.js componentDidMount');
+    this.printElement("leafletReactHTML.js componentDidMount");
 
     // add the event listeners
     if (document) {
-      document.addEventListener('message', this.handleMessage), false;
-      this.printElement('using document');
+      document.addEventListener("message", this.handleMessage), false;
+      this.printElement("using document");
     } else if (window) {
-      window.addEventListener('message', this.handleMessage), false;
-      this.printElement('using window');
+      window.addEventListener("message", this.handleMessage), false;
+      this.printElement("using window");
     } else {
-      console.log('unable to add event listener');
+      console.log("unable to add event listener");
       return;
     }
 
@@ -71,13 +71,13 @@ class mapComponent extends Component {
         locations: testLocations,
         ownPositionMarker: {
           coords: this.state.centerPosition,
-          icon: '🎃',
+          icon: "🎃",
           size: [24, 24],
           animation: {
-            name: 'pulse',
-            duration: '.5',
+            name: "pulse",
+            duration: ".5",
             delay: 0,
-            interationCount: 'infinite'
+            interationCount: "infinite"
           }
         },
         mapLayers,
@@ -90,22 +90,22 @@ class mapComponent extends Component {
             [36.8859965, -76.4096793],
             [39.07467659353497, -76.91253011988012]
           ],
-          boundsOptions: {padding: [0,0]}
+          boundsOptions: { padding: [0, 0] }
         });
       }, 5000);
     }
 
     try {
-      this.printElement('trying to send on load message');
+      this.printElement("trying to send on load message");
       setTimeout(() => {
-        this.printElement('sending on load message after timeout');
-        this.onMapEvent('onLoad', {
+        this.printElement("sending on load message after timeout");
+        this.onMapEvent("onLoad", {
           loaded: true,
           center: this.mapRef.current.leafletElement.getCenter(),
           bounds: this.mapRef.current.leafletElement.getBounds(),
           zoom: this.mapRef.current.leafletElement.getZoom()
         });
-        this.printElement('sent onload event');
+        this.printElement("sent onload event");
       }, 1000);
     } catch (error) {
       this.printElement(error);
@@ -114,9 +114,9 @@ class mapComponent extends Component {
 
   componentWillUnmount = () => {
     if (document) {
-      document.removeEventListener('message', this.handleMessage);
+      document.removeEventListener("message", this.handleMessage);
     } else if (window) {
-      window.removeEventListener('message', this.handleMessage);
+      window.removeEventListener("message", this.handleMessage);
     }
   };
 
@@ -129,7 +129,7 @@ class mapComponent extends Component {
     }
 
     if (prevState.combinedLocations !== this.state.combinedLocations) {
-      let markers = this.state.combinedLocations.map((location) => {
+      let markers = this.state.combinedLocations.map(location => {
         if (isValidCoordinates(location.coords[1], location.coords[0])) {
           return {
             id: location.id,
@@ -167,7 +167,7 @@ class mapComponent extends Component {
       this.setState({
         combinedLocations: [
           ...this.state.locations,
-          { id: 'ownPositionMarker', ...this.state.ownPositionMarker }
+          { id: "ownPositionMarker", ...this.state.ownPositionMarker }
         ]
       });
     } else if (this.state.locations) {
@@ -177,7 +177,7 @@ class mapComponent extends Component {
     } else if (this.state.ownPositionMarker) {
       this.setState({
         combinedLocations: [
-          { id: 'ownPositionMarker', ...this.state.ownPositionMarker }
+          { id: "ownPositionMarker", ...this.state.ownPositionMarker }
         ]
       });
     }
@@ -185,12 +185,12 @@ class mapComponent extends Component {
 
   // print passed information in an html element; useful for debugging
   // since console.log and debug statements won't work in a conventional way
-  printElement = (data) => {
+  printElement = data => {
     if (SHOW_DEBUG_INFORMATION) {
-      let message = '';
-      if (typeof data === 'object') {
+      let message = "";
+      if (typeof data === "object") {
         message = util.inspect(data, { showHidden: false, depth: null });
-      } else if (typeof data === 'string') {
+      } else if (typeof data === "string") {
         message = data;
       }
       this.setState({
@@ -200,16 +200,20 @@ class mapComponent extends Component {
     }
   };
 
-  createDivIcon = (location) => {
+  createDivIcon = location => {
     let divIcon = L.divIcon({
-      className: 'clearMarkerContainer',
+      className: "clearMarkerContainer",
       html: location.animation
         ? this.getAnimatedHTMLString(
-            location.icon || '📍',
+            location.icon || "📍",
             location.animation || null,
             location.size || [24, 24]
           )
-        : this.getUnanimatedHTMLString(location.icon, location.size),
+        : this.getUnanimatedHTMLString(
+            location.icon,
+            location.size,
+            location.rotate
+          ),
       iconAnchor: location.iconAnchor || null
     });
     return divIcon;
@@ -220,36 +224,43 @@ class mapComponent extends Component {
   */
   getAnimatedHTMLString = (icon, animation, size = [24, 24]) => {
     return `<div class='animationContainer' style="
-      animation-name: ${animation.name ? animation.name : 'bounce'}; 
+      animation-name: ${animation.name ? animation.name : "bounce"}; 
       animation-duration: ${animation.duration ? animation.duration : 1}s ;
       animation-delay: ${animation.delay ? animation.delay : 0}s;
       animation-direction: ${
-        animation.direction ? animation.direction : 'normal'
+        animation.direction ? animation.direction : "normal"
       };
       animation-iteration-count: ${
-        animation.interationCount ? animation.interationCount : 'infinite'
+        animation.interationCount ? animation.interationCount : "infinite"
       }">
       ${this.getIconFromEmojiOrImageOrSVG(icon, size)}
 
       </div>`;
   };
 
-  getUnanimatedHTMLString = (icon, animation, size = [24, 24]) => {
+  getUnanimatedHTMLString = (icon, size = [24, 24], rotate) => {
     return `<div class='unanimatedIconContainer' >
-      ${this.getIconFromEmojiOrImageOrSVG(icon, size)}
-
+      ${this.getIconFromEmojiOrImageOrSVG(icon, size, rotate)}
       </div>`;
   };
 
-  getIconFromEmojiOrImageOrSVG = (icon, size) => {
-    if (icon.includes('svg') || icon.includes('SVG')) {
+  getIconFromEmojiOrImageOrSVG = (icon, size, rotate) => {
+    if (icon.includes("svg") || icon.includes("SVG")) {
       return ` <div style='font-size: ${Math.max(size[0], size[1])}px'>
       ${icon}
       </div>`;
-    } else if (icon.includes('//') || icon.includes('base64')) {
-      return `<img src="${icon}" style="width:${size[0]}px;height:${
-        size[1]
-      }px;">`;
+    } else if (icon.includes("//") || icon.includes("base64")) {
+      let style = "";
+      if (size[0]) {
+        style += `width:${size[0]}px;`;
+      }
+      if (size[1]) {
+        style += `height:${size[1]}px;`;
+      }
+      if (rotate) {
+        style += `transform: rotate(${rotate}deg);`;
+      }
+      return `<img src="${icon}" style="${style}"`;
     } else {
       return ` <div style='font-size: ${Math.max(size[0], size[1])}px'>
     ${icon}
@@ -258,7 +269,7 @@ class mapComponent extends Component {
   };
   // data to send is an object containing key value pairs that will be
   // spread into the destination's state
-  sendMessage = (payload) => {
+  sendMessage = payload => {
     // this.printElement(`in send message payload = ${JSON.stringify(payload)}`);
 
     const message = JSON.stringify({
@@ -269,12 +280,12 @@ class mapComponent extends Component {
     this.printElement(`message to send = ${message}`);
 
     try {
-      if (document.hasOwnProperty('postMessage')) {
-        document.postMessage(message, '*');
-      } else if (window.hasOwnProperty('postMessage')) {
-        window.postMessage(message, '*');
+      if (document.hasOwnProperty("postMessage")) {
+        document.postMessage(message, "*");
+      } else if (window.hasOwnProperty("postMessage")) {
+        window.postMessage(message, "*");
       } else {
-        console.log('unable to find postMessage');
+        console.log("unable to find postMessage");
         this.printElement(`unable to find postMessage`);
       }
     } catch (error) {
@@ -284,7 +295,7 @@ class mapComponent extends Component {
     this.printElement(`sent message: ${message}`);
   };
 
-  handleMessage = (event) => {
+  handleMessage = event => {
     this.printElement(
       `received message ${util.inspect(event.data, {
         showHidden: false,
@@ -296,7 +307,7 @@ class mapComponent extends Component {
     try {
       msgData = JSON.parse(event.data);
       if (
-        msgData.hasOwnProperty('prefix') &&
+        msgData.hasOwnProperty("prefix") &&
         msgData.prefix === MESSAGE_PREFIX
       ) {
         this.printElement(`Received: ${JSON.stringify(msgData)}`);
@@ -340,14 +351,14 @@ class mapComponent extends Component {
     // to center the map.  Centering the map component on the actual
     // map center will allow us to recenter the map by updating the centerPosition
     // item in state ourself
-    if (event === 'onMoveEnd') {
+    if (event === "onMoveEnd") {
       this.setState({ centerPosition: mapCenterPosition }, () => {
         /*  this.printElement(
           `************** Updated centerPosition = ${this.state.centerPosition}`
         ); */
       });
     }
-    if (event === 'onZoomEnd') {
+    if (event === "onZoomEnd") {
       this.setState({ zoom: mapZoom }, () => {
         /*  this.printElement(
           `************** Updated mapZoom = ${this.state.zoom}`
@@ -364,15 +375,15 @@ class mapComponent extends Component {
         return (
           <LayerGroup>
             <MarkerClusterGroup>
-              {this.state.markers.map((marker) => {
-                if (marker.id !== 'ownPositionMarker') {
+              {this.state.markers.map(marker => {
+                if (marker.id !== "ownPositionMarker") {
                   return (
                     <Marker
                       key={marker.id}
                       position={marker.coords}
                       icon={marker.divIcon}
                       onClick={() => {
-                        this.onMapEvent('onMapMarkerClicked', {
+                        this.onMapEvent("onMapMarkerClicked", {
                           id: marker.id
                         });
                       }}
@@ -383,15 +394,15 @@ class mapComponent extends Component {
                 }
               })}
             </MarkerClusterGroup>
-            {this.state.markers.map((marker) => {
-              if (marker.id === 'ownPositionMarker') {
+            {this.state.markers.map(marker => {
+              if (marker.id === "ownPositionMarker") {
                 return (
                   <Marker
                     key={marker.id}
                     position={marker.coords}
                     icon={marker.divIcon}
                     onClick={() => {
-                      this.onMapEvent('onMapMarkerClicked', {
+                      this.onMapEvent("onMapMarkerClicked", {
                         id: marker.id
                       });
                     }}
@@ -406,14 +417,14 @@ class mapComponent extends Component {
       } else {
         return (
           <LayerGroup>
-            {this.state.markers.map((marker) => {
+            {this.state.markers.map(marker => {
               return (
                 <Marker
                   key={marker.id}
                   position={marker.coords}
                   icon={marker.divIcon}
                   onClick={() => {
-                    this.onMapEvent('onMapMarkerClicked', {
+                    this.onMapEvent("onMapMarkerClicked", {
                       id: marker.id
                     });
                   }}
@@ -437,8 +448,8 @@ class mapComponent extends Component {
           ) : (
             <Map
               style={{
-                width: '100%',
-                backgroundColor: 'lightblue'
+                width: "100%",
+                backgroundColor: "lightblue"
               }}
               ref={this.mapRef}
               center={this.state.centerPosition}
@@ -453,40 +464,40 @@ class mapComponent extends Component {
                 this.setState({ loaded: true });
                 this.printElement(`******* map loaded *******`);
               }}
-              onClick={(event) => {
-                this.onMapEvent('onMapClicked', {
+              onClick={event => {
+                this.onMapEvent("onMapClicked", {
                   coords: [event.latlng.lat, event.latlng.lng]
                 });
               }}
               onZoomLevelsChange={() => {
-                this.onMapEvent('onZoomLevelsChange', null);
+                this.onMapEvent("onZoomLevelsChange", null);
               }}
               onResize={() => {
-                this.onMapEvent('onResize', null);
+                this.onMapEvent("onResize", null);
               }}
               onZoomStart={() => {
-                this.onMapEvent('onZoomStart', null);
+                this.onMapEvent("onZoomStart", null);
               }}
               onMoveStart={() => {
-                this.onMapEvent('onMoveStart', null);
+                this.onMapEvent("onMoveStart", null);
               }}
               onZoom={() => {
-                this.onMapEvent('onZoom', null);
+                this.onMapEvent("onZoom", null);
               }}
               onMove={() => {
-                this.onMapEvent('onMove', null);
+                this.onMapEvent("onMove", null);
               }}
               onZoomEnd={() => {
-                this.onMapEvent('onZoomEnd', null);
+                this.onMapEvent("onZoomEnd", null);
               }}
               onMoveEnd={() => {
-                this.onMapEvent('onMoveEnd', null);
+                this.onMapEvent("onMoveEnd", null);
               }}
               onUnload={() => {
-                this.onMapEvent('onUnload', null);
+                this.onMapEvent("onUnload", null);
               }}
               onViewReset={() => {
-                this.onMapEvent('onViewReset', null);
+                this.onMapEvent("onViewReset", null);
               }}
             >
               {this.state.mapLayers.length <= 1 ? (
@@ -506,11 +517,11 @@ class mapComponent extends Component {
           {SHOW_DEBUG_INFORMATION ? (
             <div
               style={{
-                backgroundColor: 'orange',
-                maxHeight: '200px',
-                overflow: 'auto',
+                backgroundColor: "orange",
+                maxHeight: "200px",
+                overflow: "auto",
                 padding: 5,
-                position: 'fixed',
+                position: "fixed",
                 bottom: 0,
                 left: 0,
                 right: 0,
