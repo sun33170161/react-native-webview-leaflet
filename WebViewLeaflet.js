@@ -229,6 +229,13 @@ export default class WebViewLeaflet extends React.Component {
       };
     }
 
+    if (this.props.showMarkerControl !== undefined) {
+      onMapLoadedUpdate = {
+        ...onMapLoadedUpdate,
+        ...{ showMarkerControl: this.props.showMarkerControl }
+      };
+    }
+
     if (Object.keys(onMapLoadedUpdate).length > 0) {
       // console.log({ onMapLoadedUpdate });
       this.sendMessage(onMapLoadedUpdate);

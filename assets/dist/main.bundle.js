@@ -52707,6 +52707,7 @@ var mapComponent = function (_Component) {
       debugMessages: [],
       locations: [],
       markers: [],
+      showMarkerControl: true,
       showAttributionControl: false,
       mapLayers: [],
       combinedLocations: [], // array to contain the locations that will be turned into markers and ownPostionMarker
@@ -52812,7 +52813,7 @@ var mapComponent = function (_Component) {
               { position: "topright" },
               _react2.default.createElement(_ControlsLayer2.default, { mapLayers: this.state.mapLayers })
             ),
-            _react2.default.createElement(
+            this.state.showMarkerControl ? _react2.default.createElement(
               _reactLeaflet.LayersControl,
               { position: "topleft" },
               _react2.default.createElement(
@@ -52820,7 +52821,7 @@ var mapComponent = function (_Component) {
                 { name: "Markers", checked: "true" },
                 this.renderMarkers()
               )
-            )
+            ) : this.renderMarkers()
           ),
           SHOW_DEBUG_INFORMATION ? _react2.default.createElement(
             "div",

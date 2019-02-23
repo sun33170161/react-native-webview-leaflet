@@ -42,6 +42,7 @@ class mapComponent extends Component {
       debugMessages: [],
       locations: [],
       markers: [],
+      showMarkerControl: true,
       showAttributionControl: false,
       mapLayers: [],
       combinedLocations: [], // array to contain the locations that will be turned into markers and ownPostionMarker
@@ -507,11 +508,15 @@ class mapComponent extends Component {
                   <ControlsLayer mapLayers={this.state.mapLayers} />
                 </LayersControl>
               )}
-              <LayersControl position="topleft">
-                <LayersControl.Overlay name="Markers" checked="true">
-                  {this.renderMarkers()}
-                </LayersControl.Overlay>
-              </LayersControl>
+              {this.state.showMarkerControl ? (
+                <LayersControl position="topleft">
+                  <LayersControl.Overlay name="Markers" checked="true">
+                    {this.renderMarkers()}
+                  </LayersControl.Overlay>
+                </LayersControl>
+              ) : (
+                this.renderMarkers()
+              )}
             </Map>
           )}
           {SHOW_DEBUG_INFORMATION ? (
